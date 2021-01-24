@@ -2,14 +2,19 @@ import pygame
 import os
 from Scenes.Manager import Manager
 from Scenes.Game import Game
+from Scenes.Intro import Intro
+from Scenes.Crash import Crash
 from Components.Constants import WIN_WIDTH, WIN_HEIGHT
 
 
 WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption("Side Scroller")
 
-scene_dict = {"Game": Game()}
-starting_scene = "Game"
+scene_dict = {"Intro": Intro(),
+              "Game": Game(),
+              "Crash": Crash()}
+
+starting_scene = "Intro"
 
 def main():
     clock = pygame.time.Clock()
@@ -19,7 +24,7 @@ def main():
     manager.setup_scenes(scene_dict, starting_scene)
 
     while running:
-        clock.tick(60)
+        clock.tick(manager.FPS)
 
         if manager.scene.done:
             manager.swap_scenes()

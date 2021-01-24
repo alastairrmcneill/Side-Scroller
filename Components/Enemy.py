@@ -3,8 +3,8 @@ from Components.Constants import PLAYER_IMGS
 
 class Enemy:
     def __init__(self):
-        self.y = 0
         self.x = 900
+        self.y = 0
         self.IMGS = PLAYER_IMGS
         self.current_img = self.IMGS[0]
         self.animateLoop = 5
@@ -19,10 +19,6 @@ class Enemy:
         if self.animateCount < self.animateLoop:
             self.current_img = self.IMGS[0]
         elif self.animateCount < self.animateLoop * 2:
-            self.current_img = self.IMGS[1]
-        elif self.animateCount < self.animateLoop * 3:
-            self.current_img = self.IMGS[2]
-        elif self.animateCount < self.animateLoop * 4:
             self.current_img = self.IMGS[1]
         else:
             self.current_img = self.IMGS[0]

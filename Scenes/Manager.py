@@ -13,6 +13,7 @@ class Manager:
         self.scene_dict = {}
         self.scene_name = None
         self.scene = None
+        self.FPS = 30
 
     def setup_scenes(self, scene_dict, start_scene):
         """
@@ -25,6 +26,7 @@ class Manager:
         self.scene_dict = scene_dict
         self.scene_name = start_scene
         self.scene = self.scene_dict[self.scene_name]
+        self.scene.manager = self
 
     def swap_scenes(self):
         """
@@ -34,5 +36,6 @@ class Manager:
         self.scene_name = self.scene.next
         persist = self.scene.cleanup()
         self.scene = self.scene_dict[self.scene_name]
+        self.scene.manager = self
         self.scene.startup(persist)
         self.scene.previous = previous

@@ -1,6 +1,8 @@
 """
 This is the default scene class that all others should inherit from. There should be no instances of this class directly in the application
 """
+import pygame
+pygame.font.init()
 
 class Scene:
     def __init__(self):
@@ -10,6 +12,8 @@ class Scene:
         self.done = False
         self.next = None
         self.previous = None
+        self.manager = None
+        self.font = pygame.font.SysFont("Ariel", 50)
         self.persist = {}
 
     def startup(self, persist):

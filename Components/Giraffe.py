@@ -1,9 +1,9 @@
 import pygame
 from Components.Enemy import Enemy
-from Components.Constants import PLAYER_IMGS
+from Components.Constants import GIRAFFE_IMGS
 
-class High_enemy(Enemy):
+class Giraffe(Enemy):
     def __init__(self):
         super().__init__()
         self.y = 200
-        self.IMGS = PLAYER_IMGS
+        self.IMGS = GIRAFFE_IMGS

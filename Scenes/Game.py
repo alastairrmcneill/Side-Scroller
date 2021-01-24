@@ -3,8 +3,8 @@ import random
 
 from Scenes.Scene import Scene
 from Components.Player import Player
-from Components.High_enemy import High_enemy
-from Components.Low_enemy import Low_enemy
+from Components.Giraffe import Giraffe
+from Components.Rhino import Rhino
 from Components.Constants import BG_IMG
 
 class Game(Scene):
@@ -18,16 +18,27 @@ class Game(Scene):
         self.x1 = 0
         self.x2 = self.img.get_width()
         self.player = Player()
-        self.enemies = [High_enemy()]
+        self.enemies = [Giraffe()]
         self.enemy_timer = 0
-        self.min_gap = 50
+        self.min_gap = 300
         self.range_gap = 50
+        self.speed_timer = 0
+        self.speed_loop = 100
+        self.score = 0
 
     def startup(self, persist):
         self.reset()
 
+
     def cleanup(self):
         self.done = False
+        self.manager.FPS = 30
+        self.persist = {"Score": self.score,
+                        "Player": self.player,
+                        "Enemies": self.enemies,
+                        "x1": self.x1,
+                        "x2": self.x2}
+
         return self.persist
 
     def handle_event(self, event):
@@ -50,17 +61,20 @@ class Game(Scene):
             self.x2 = self.x1 + self.img.get_width()
 
         self.add_enemy()
+        self.set_speed()
 
         self.player.move()
+        if self.player.crashed:
+            self.done = True
+            self.next = "Crash"
 
         for en in self.enemies:
             en.move()
             if en.check_collision(self.player):
-                print("Crashed")
-                self.done = True
-                self.next = "Game"
+                self.player.crashing = True
             if en.x + en.current_img.get_width() < 0:
                 self.enemies.pop(self.enemies.index(en))
+                self.score += 1
 
 
 
@@ -74,10 +88,19 @@ class Game(Scene):
 
     def add_enemy(self):
         self.enemy_timer += 1
-        if self.enemy_timer > self.min_gap + 100 * random.randint(0,self.range_gap):
-            if random.random() > 0.5:
-                self.enemies.append(High_enemy())
+        if self.enemy_timer > self.min_gap + 75 * random.randint(0,self.range_gap):
+            if random.random() > 0.6  :
+                self.enemies.append(Giraffe())
             else:
-                self.enemies.append(Low_enemy())
+                self.enemies.append(Rhino())
             self.enemy_timer = 0
+
+    def set_speed(self):
+        self.speed_timer += 1
+
+        if self.speed_timer > self.speed_loop:
+            self.manager.FPS += 5
+            if self.manager.FPS > 100:
+                self.manager.FPS = 100
+            self.speed_timer = 0
 

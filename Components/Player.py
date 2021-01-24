@@ -8,8 +8,11 @@ class Player:
         self.floor = 388
         self.vel = -3
         self.g = 0.3
+        self.crashing = False
+        self.crashed = False
         self.jumping = False
         self.sliding = False
+        self.crashCount = 0
         self.slideCount = 0
         self.jumpCount = 0
         self.runCount = 0
@@ -20,9 +23,8 @@ class Player:
     def move(self):
         if self.sliding:
             if self.slideCount < 50:
-                self.y = 400
+                self.current_img = self.IMGS[3]
             elif self.slideCount > 50:
-                self.y = 388
                 self.slideCount = 0
                 self.sliding = False
 
@@ -30,6 +32,7 @@ class Player:
 
 
         elif self.jumping:
+            self.current_img = self.IMGS[4]
             self.jumpCount += 1
 
             s = self.vel * self.jumpCount + 0.5 * self.g * self.jumpCount ** 2
@@ -41,6 +44,11 @@ class Player:
                 self.y = self.floor
                 self.jumping = False
                 self.jumpCount = 0
+
+        elif self.crashing:
+            self.crashCount += 1
+            if self.crashCount > 20:
+                self.crashed = True
 
         else:
             self.runCount += 1
