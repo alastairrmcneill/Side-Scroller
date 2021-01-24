@@ -27,11 +27,11 @@ PLAYER_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, 
                pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Player_slide.png")), (164,96)),
                pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Player_jump.png")), (100,96)),]
 
-GIRAFFE_IMGS = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 1.png")), (124,176)), True, False),
-                pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 2.png")), (124,176)), True, False)]
+GIRAFFE_IMGS = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 1.png")), (72,114)), True, False),
+                pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 2.png")), (72,114)), True, False)]
 
-RHINO_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Rhino 1.png")), (192,100)),
-                pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Rhino 2.png")), (192,100))]
+RHINO_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Rhino 1.png")), (125,65)),
+                pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Rhino 2.png")), (125,65))]
 
 BOBBING_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Player0.png")), (100, 96)),
                 pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Player0.png")), (100, 90))]

@@ -14,20 +14,21 @@ class Game(Scene):
 
     def reset(self):
         self.img = BG_IMG.convert()
-        self.vel = 2
+        self.vel = 6
         self.x1 = 0
         self.x2 = self.img.get_width()
         self.player = Player()
         self.enemies = [Giraffe()]
         self.enemy_timer = 0
-        self.min_gap = 300
-        self.range_gap = 50
+        self.min_gap = 50
+        self.range_gap = 40
         self.speed_timer = 0
-        self.speed_loop = 100
+        self.speed_loop = 1000
         self.score = 0
 
     def startup(self, persist):
         self.reset()
+        self.manager.FPS = 10
 
 
     def cleanup(self):
@@ -81,9 +82,10 @@ class Game(Scene):
     def draw(self, screen):
         screen.blit(self.img, (self.x1,0))
         screen.blit(self.img, (self.x2,0))
-        self.player.draw(screen)
         for en in self.enemies:
             en.draw(screen)
+
+        self.player.draw(screen)
 
 
     def add_enemy(self):

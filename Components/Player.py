@@ -22,9 +22,9 @@ class Player:
 
     def move(self):
         if self.sliding:
-            if self.slideCount < 50:
+            if self.slideCount < 30:
                 self.current_img = self.IMGS[3]
-            elif self.slideCount > 50:
+            elif self.slideCount > 30:
                 self.slideCount = 0
                 self.sliding = False
 
