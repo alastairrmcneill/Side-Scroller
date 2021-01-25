@@ -30,6 +30,9 @@ PLAYER_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, 
 GIRAFFE_IMGS = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 1.png")), (72,114)), True, False),
                 pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 2.png")), (72,114)), True, False)]
 
+BIRD_IMGS = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 1.png")), (72,114)), True, False),
+             pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 2.png")), (72,114)), True, False)]
+
 RHINO_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Rhino 1.png")), (125,65)),
                 pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Rhino 2.png")), (125,65))]
 

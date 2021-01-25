@@ -24,7 +24,7 @@ class Player:
         if self.sliding:
             if self.slideCount < 30:
                 self.current_img = self.IMGS[3]
-            elif self.slideCount > 30:
+            elif self.slideCount > 32:
                 self.slideCount = 0
                 self.sliding = False
 
@@ -47,7 +47,7 @@ class Player:
 
         elif self.crashing:
             self.crashCount += 1
-            if self.crashCount > 20:
+            if self.crashCount > 30:
                 self.crashed = True
 
         else:
