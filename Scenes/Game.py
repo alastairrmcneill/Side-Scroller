@@ -6,7 +6,7 @@ from Components.Player import Player
 from Components.Giraffe import Giraffe
 from Components.Rhino import Rhino
 from Components.Bird import Bird
-from Components.Constants import BG_IMG
+from Components.Constants import BG_IMG, CLOUDS_IMG
 
 class Game(Scene):
     def __init__(self):
@@ -15,13 +15,17 @@ class Game(Scene):
 
     def reset(self):
         self.img = BG_IMG.convert()
+        self.clouds_img = CLOUDS_IMG.convert_alpha()
         self.vel = 6
         self.x1 = 0
         self.x2 = self.img.get_width()
+        self.c1 = 0
+        self.c2 = self.clouds_img.get_width()
+        self.c_vel = 1
         self.player = Player()
         self.enemies = [Giraffe()]
         self.enemy_timer = 0
-        self.min_gap = 50
+        self.min_gap = 60
         self.range_gap = 40
         self.speed_timer = 0
         self.speed_loop = 1000
@@ -30,7 +34,9 @@ class Game(Scene):
     def startup(self, persist):
         self.reset()
         self.manager.FPS = 45
-
+        self.persist = persist
+        self.c1 = persist["c1"]
+        self.c2 = persist["c2"]
 
     def cleanup(self):
         self.done = False
@@ -39,7 +45,9 @@ class Game(Scene):
                         "Player": self.player,
                         "Enemies": self.enemies,
                         "x1": self.x1,
-                        "x2": self.x2}
+                        "x2": self.x2,
+                        "c1": self.c1,
+                        "c2": self.c2}
 
         return self.persist
 
@@ -55,12 +63,21 @@ class Game(Scene):
     def update(self):
         self.x1 -= self.vel
         self.x2 -= self.vel
+        self.c1 -= self.c_vel
+        self.c2 -= self.c_vel
 
         if self.x1 + self.img.get_width() <0:
             self.x1 = self.x2 + self.img.get_width()
 
         if self.x2 + self.img.get_width() <0:
             self.x2 = self.x1 + self.img.get_width()
+
+        if self.c1 + self.clouds_img.get_width() <0:
+            self.c1 = self.c2 + self.clouds_img.get_width()
+
+        if self.c2 + self.clouds_img.get_width() <0:
+            self.c2 = self.c1 + self.clouds_img.get_width()
+
 
         self.add_enemy()
         self.set_speed()
@@ -81,8 +98,11 @@ class Game(Scene):
 
 
     def draw(self, screen):
-        screen.blit(self.img, (self.x1,0))
-        screen.blit(self.img, (self.x2,0))
+        screen.blit(self.img, (self.x1,-20))
+        screen.blit(self.img, (self.x2,-20))
+        screen.blit(self.clouds_img, (self.c1, -20))
+        screen.blit(self.clouds_img, (self.c2, -20))
+
         for en in self.enemies:
             en.draw(screen)
 

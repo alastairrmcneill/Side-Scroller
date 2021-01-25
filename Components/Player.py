@@ -1,5 +1,5 @@
 import pygame
-from Components.Constants import PLAYER_IMGS
+from Components.Constants import PLAYER_IMGS, CRASHING_IMGS
 
 class Player:
     def __init__(self):
@@ -18,6 +18,7 @@ class Player:
         self.runCount = 0
         self.runLoop = 8
         self.IMGS = PLAYER_IMGS
+        self.CRASHING_IMGS = CRASHING_IMGS
         self.current_img = self.IMGS[0]
 
     def move(self):
@@ -47,7 +48,14 @@ class Player:
 
         elif self.crashing:
             self.crashCount += 1
-            if self.crashCount > 30:
+            if self.crashCount < 8:
+                self.current_img = self.CRASHING_IMGS[0]
+            elif self.crashCount == 8:
+                self.y += 36
+                self.current_img = self.CRASHING_IMGS[1]
+            elif self.crashCount < 40:
+                self.current_img = self.CRASHING_IMGS[1]
+            else:
                 self.crashed = True
 
         else:
