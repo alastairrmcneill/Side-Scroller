@@ -16,7 +16,7 @@ class Game(Scene):
     def reset(self):
         self.img = BG_IMG.convert()
         self.clouds_img = CLOUDS_IMG.convert_alpha()
-        self.vel = 6
+        self.vel = 7
         self.x1 = 0
         self.x2 = self.img.get_width()
         self.c1 = 0

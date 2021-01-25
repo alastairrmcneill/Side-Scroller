@@ -9,7 +9,7 @@ class Enemy:
         self.current_img = self.IMGS[0]
         self.animateLoop = 5
         self.animateCount = 0
-        self.vel = -6
+        self.vel = -7
 
     def move(self):
         self.x += self.vel

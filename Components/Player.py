@@ -17,23 +17,26 @@ class Player:
         self.jumpCount = 0
         self.runCount = 0
         self.runLoop = 8
+        self.crashLoop = 60
         self.IMGS = PLAYER_IMGS
         self.CRASHING_IMGS = CRASHING_IMGS
         self.current_img = self.IMGS[0]
 
     def move(self):
         if self.sliding:
-            if self.slideCount < 30:
-                self.current_img = self.IMGS[3]
-            elif self.slideCount > 32:
-                self.slideCount = 0
-                self.sliding = False
+            if self.crashing:
+                self.crash_animate()
+            else:
+                if self.slideCount < 32:
+                    self.current_img = self.IMGS[3]
+                elif self.slideCount > 32:
+                    self.slideCount = 0
+                    self.sliding = False
 
             self.slideCount += 1
 
 
         elif self.jumping:
-            self.current_img = self.IMGS[4]
             self.jumpCount += 1
 
             s = self.vel * self.jumpCount + 0.5 * self.g * self.jumpCount ** 2
@@ -46,17 +49,15 @@ class Player:
                 self.jumping = False
                 self.jumpCount = 0
 
-        elif self.crashing:
-            self.crashCount += 1
-            if self.crashCount < 8:
-                self.current_img = self.CRASHING_IMGS[0]
-            elif self.crashCount == 8:
-                self.y += 36
-                self.current_img = self.CRASHING_IMGS[1]
-            elif self.crashCount < 40:
-                self.current_img = self.CRASHING_IMGS[1]
+            if self.crashing:
+                self.crash_animate()
+                if self.crashCount > 8 and self.crashCount < self.crashLoop:
+                    self.y += 36
             else:
-                self.crashed = True
+                self.current_img = self.IMGS[4]
+
+        elif self.crashing:
+            self.crash_animate()
 
         else:
             self.runCount += 1
@@ -72,6 +73,19 @@ class Player:
             else:
                 self.current_img = self.IMGS[0]
                 self.runCount = 0
+
+
+    def crash_animate(self):
+        self.crashCount += 1
+        if self.crashCount < 8:
+            self.current_img = self.CRASHING_IMGS[0]
+        elif self.crashCount == 8:
+            self.y += 36
+            self.current_img = self.CRASHING_IMGS[1]
+        elif self.crashCount < self.crashLoop:
+            self.current_img = self.CRASHING_IMGS[1]
+        else:
+            self.crashed = True
 
     def get_mask(self):
         return pygame.mask.from_surface(self.current_img)

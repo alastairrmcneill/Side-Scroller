@@ -11,7 +11,7 @@ class Intro(Scene):
         self.x = 150
         self.y = 388
         self.current_img = self.IMGS[0]
-        self.bobLoop = 10
+        self.bobLoop = 15
         self.bobCount = 0
         self.c1 = 0
         self.c2 = self.clouds_img.get_width()
@@ -44,12 +44,11 @@ class Intro(Scene):
         self.bobCount += 1
         if self.bobCount < self.bobLoop:
             self.current_img = self.IMGS[0]
-            self.y = 388
-        elif self.bobCount == self.bobLoop + 2:
+        elif self.bobCount < self.bobLoop * 2:
             self.current_img = self.IMGS[1]
-            self.y = 394
+        else:
+            self.current_img = self.IMGS[0]
             self.bobCount = 0
-
 
     def draw(self, screen):
         screen.blit(self.bg_img, (0,-20))
