@@ -25,6 +25,7 @@ class Crash(Scene):
         self.x2 = persist["x2"]
         self.c1 = persist["c1"]
         self.c2 = persist["c2"]
+        self.player.current_img = self.player.CRASHING_IMGS[2]
 
         for en in self.enemies:
             en.vel = 0

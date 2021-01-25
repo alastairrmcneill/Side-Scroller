@@ -32,7 +32,8 @@ PLAYER_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, 
                pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Player_jump.png")), (100,96))]
 
 CRASHING_IMGS = [pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Crash 1.png")), (100,96)),
-                pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Crash 2.png")), (136,60))]
+                 pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Crash 2.png")), (136,60)),
+                 pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "Crash 3.png")), (136,60))]
 
 GIRAFFE_IMGS = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 1.png")), (72,114)), True, False),
                 pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join(IMGS_PATH, "G-Man 2.png")), (72,114)), True, False)]
