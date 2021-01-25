@@ -5,6 +5,7 @@ from Scenes.Scene import Scene
 from Components.Player import Player
 from Components.Giraffe import Giraffe
 from Components.Rhino import Rhino
+from Components.Bird import Bird
 from Components.Constants import BG_IMG
 
 class Game(Scene):
@@ -28,7 +29,7 @@ class Game(Scene):
 
     def startup(self, persist):
         self.reset()
-        self.manager.FPS = 10
+        self.manager.FPS = 45
 
 
     def cleanup(self):
@@ -44,11 +45,11 @@ class Game(Scene):
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-            if not self.player.sliding and not self.player.jumping:
+            if not self.player.sliding and not self.player.jumping and not self.player.crashing:
                 self.player.sliding = True
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-            if not self.player.jumping and not self.player.sliding:
+            if not self.player.jumping and not self.player.sliding and not self.player.crashing:
                 self.player.jumping = True
 
     def update(self):
@@ -91,8 +92,11 @@ class Game(Scene):
     def add_enemy(self):
         self.enemy_timer += 1
         if self.enemy_timer > self.min_gap + 75 * random.randint(0,self.range_gap):
-            if random.random() > 0.6  :
+            rand = random.random()
+            if rand > 0.6:
                 self.enemies.append(Giraffe())
+            elif rand > 0.3:
+                self.enemies.append(Bird())
             else:
                 self.enemies.append(Rhino())
             self.enemy_timer = 0
