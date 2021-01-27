@@ -3,10 +3,10 @@ import random
 
 from Scenes.Scene import Scene
 from Components.Player import Player
-from Components.Giraffe import Giraffe
+from Components.Tree import Tree
 from Components.Rhino import Rhino
 from Components.Bird import Bird
-from Components.Constants import BG_IMG, CLOUDS_IMG
+from Components.Constants import SKY_IMG, HILLS_IMG, FLOOR_IMG
 
 class Game(Scene):
     def __init__(self):
@@ -14,16 +14,20 @@ class Game(Scene):
         self.reset()
 
     def reset(self):
-        self.img = BG_IMG.convert()
-        self.clouds_img = CLOUDS_IMG.convert_alpha()
-        self.vel = 7
-        self.x1 = 0
-        self.x2 = self.img.get_width()
-        self.c1 = 0
-        self.c2 = self.clouds_img.get_width()
-        self.c_vel = 1
+        self.sky_img = SKY_IMG
+        self.hills_img = HILLS_IMG
+        self.floor_img = FLOOR_IMG
+        self.s_vel = 1
+        self.s1 = 0
+        self.s2 = self.sky_img.get_width()
+        self.h1 = 0
+        self.h2 = self.hills_img.get_width()
+        self.h_vel = 2
+        self.f1 = 0
+        self.f2 = self.floor_img.get_width()
+        self.f_vel = 7
         self.player = Player()
-        self.enemies = [Giraffe()]
+        self.enemies = [Tree()]
         self.enemy_timer = 0
         self.min_gap = 60
         self.range_gap = 40
@@ -35,8 +39,8 @@ class Game(Scene):
         self.reset()
         self.manager.FPS = 45
         self.persist = persist
-        self.c1 = persist["c1"]
-        self.c2 = persist["c2"]
+        self.s1 = persist["s1"]
+        self.s2 = persist["s2"]
 
     def cleanup(self):
         self.done = False
@@ -44,10 +48,12 @@ class Game(Scene):
         self.persist = {"Score": self.score,
                         "Player": self.player,
                         "Enemies": self.enemies,
-                        "x1": self.x1,
-                        "x2": self.x2,
-                        "c1": self.c1,
-                        "c2": self.c2}
+                        "s1": self.s1,
+                        "s2": self.s2,
+                        "h1": self.h1,
+                        "h2": self.h2,
+                        "f1": self.f1,
+                        "f2": self.f2}
 
         return self.persist
 
@@ -61,22 +67,30 @@ class Game(Scene):
                 self.player.jumping = True
 
     def update(self):
-        self.x1 -= self.vel
-        self.x2 -= self.vel
-        self.c1 -= self.c_vel
-        self.c2 -= self.c_vel
+        self.s1 -= self.s_vel
+        self.s2 -= self.s_vel
+        self.h1 -= self.h_vel
+        self.h2 -= self.h_vel
+        self.f1 -= self.f_vel
+        self.f2 -= self.f_vel
 
-        if self.x1 + self.img.get_width() <0:
-            self.x1 = self.x2 + self.img.get_width()
+        if self.s1 + self.sky_img.get_width() <0:
+            self.s1 = self.s2 + self.sky_img.get_width()
 
-        if self.x2 + self.img.get_width() <0:
-            self.x2 = self.x1 + self.img.get_width()
+        if self.s2 + self.sky_img.get_width() <0:
+            self.s2 = self.s1 + self.sky_img.get_width()
 
-        if self.c1 + self.clouds_img.get_width() <0:
-            self.c1 = self.c2 + self.clouds_img.get_width()
+        if self.h1 + self.hills_img.get_width() <0:
+            self.h1 = self.h2 + self.hills_img.get_width()
 
-        if self.c2 + self.clouds_img.get_width() <0:
-            self.c2 = self.c1 + self.clouds_img.get_width()
+        if self.h2 + self.hills_img.get_width() <0:
+            self.h2 = self.h1 + self.hills_img.get_width()
+
+        if self.f1 + self.floor_img.get_width() <0:
+            self.f1 = self.f2 + self.floor_img.get_width()
+
+        if self.f2 + self.floor_img.get_width() <0:
+            self.f2 = self.f1 + self.floor_img.get_width()
 
 
         self.add_enemy()
@@ -98,10 +112,12 @@ class Game(Scene):
 
 
     def draw(self, screen):
-        screen.blit(self.img, (self.x1,-20))
-        screen.blit(self.img, (self.x2,-20))
-        screen.blit(self.clouds_img, (self.c1, -20))
-        screen.blit(self.clouds_img, (self.c2, -20))
+        screen.blit(self.sky_img, (self.s1, -20))
+        screen.blit(self.sky_img, (self.s2, -20))
+        screen.blit(self.hills_img, (self.h1, -20))
+        screen.blit(self.hills_img, (self.h2, -20))
+        screen.blit(self.floor_img, (self.f1, -20))
+        screen.blit(self.floor_img, (self.f2, -20))
 
         for en in self.enemies:
             en.draw(screen)
@@ -114,7 +130,7 @@ class Game(Scene):
         if self.enemy_timer > self.min_gap + 75 * random.randint(0,self.range_gap):
             rand = random.random()
             if rand > 0.6:
-                self.enemies.append(Giraffe())
+                self.enemies.append(Tree())
             elif rand > 0.3:
                 self.enemies.append(Bird())
             else:
